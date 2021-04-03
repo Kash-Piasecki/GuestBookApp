@@ -24,7 +24,6 @@
                 <div class="row form-group">
                     <h6 class="col-sm">Page: @Model.PageIndex / @Model.TotalPages</h6>
                     <input type="number" min="1" max="@Model.TotalPages" name="pageNumber" value="@Model.PageIndex" class="form-control w-25 col-sm">
-                    <input type="number" name="maxIndex" value="@Model.TotalPages" hidden>
                     <input type="submit" value="Go" class="btn btn-outline-dark col-sm w-25" asp-for="PageIndex">
                     <span asp-validation-for="PageIndex"></span>
                 </div>

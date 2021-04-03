@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Diagnostics;
+using System.Threading.Tasks;
 using GuestBookApp.Helper;
 using GuestBookApp.Models;
 using GuestBookApp.Services;
@@ -27,11 +28,9 @@ namespace GuestBookApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult IndexConfirm(int pageNumber, int maxIndex)
+        public IActionResult IndexConfirm(int pageNumber)
         {
-            if (IsPageInRange(pageNumber, maxIndex))
                 return Redirect($"Index/?page={pageNumber}");
-            return RedirectToAction("Index", "Post");
         }
 
         public IActionResult Create()
@@ -52,9 +51,15 @@ namespace GuestBookApp.Controllers
             return View(model);
         }
 
-        private bool IsPageInRange(int page, int max)
+        private bool IsPageInRange(int page, int max) 
         {
             return page > 0 && page <= max;
+        }
+        
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
