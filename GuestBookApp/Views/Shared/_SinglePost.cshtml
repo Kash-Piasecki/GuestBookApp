@@ -1,12 +1,12 @@
-﻿@* @model GuestBookApp.Models.Post *@
+﻿@model GuestBookApp.Models.Post
 
     <table class="table table-bordered">
-      <th colspan="2">Header</th>
+      <th colspan="2">@Model.User.Name</th>
       <tr>
-        <td colspan="2">Email</td>
+        <td colspan="2">@Model.User.Email</td>
       </tr>
       <tr>
-        <td width="20%">date</td>
-        <td style="word-wrap: break-word;" width="80%">Long Message</td>
+        <td width="20%">@Model.DateTime</td>
+        <td style="word-wrap: break-word;" width="80%">@Model.Message</td>
       </tr>
     </table>
