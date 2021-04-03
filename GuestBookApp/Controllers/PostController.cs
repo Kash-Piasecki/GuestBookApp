@@ -2,29 +2,24 @@
 using System.Linq;
 using GuestBookApp.Data;
 using GuestBookApp.Models;
+using GuestBookApp.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GuestBookApp.Controllers
 {
     public class PostController : Controller
     {
-        private readonly GuestBookContext _db;
+        private readonly IPostService _postService;
 
-        public PostController(GuestBookContext db)
+        public PostController(IPostService postService)
         {
-            _db = db;
+            _postService = postService;
         }
 
         // GET
         public IActionResult Index()
         {
-            IEnumerable<Post> postList = _db.Posts.OrderByDescending(x => x.DateTime);
-            foreach (var obj in postList)
-            {
-                obj.User = _db.Users.FirstOrDefault(x => x.Id == obj.UserId);
-            }
-
-            return View(postList);
+            return View(_postService.GetPostListDescending());
         }
 
         public IActionResult Create()
@@ -38,21 +33,9 @@ namespace GuestBookApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var newUser = new User()
-                {
-                    Email = model.User.Email,
-                    Name = model.User.Name,
-                };
-                _db.Users.Add(newUser);
-                _db.Posts.Add(new Post()
-                {
-                    Message = model.Message,
-                    User = newUser,
-                });
-                _db.SaveChanges();
+               _postService.SavePostToDb(model);
                 return RedirectToAction("Index", "Post");
             }
-
             return View(model);
         }
     }
