@@ -16,14 +16,22 @@
     <div class="row justify-content-between">
 
         <div class="col-sm">
-            <a asp-action="Index" asp-route-page="@(Model.PageIndex - 1)" class="btn btn-outline-dark @prevDisabled"> Previous </a>
+            <a asp-action="Index" asp-route-page="@(Model.PageIndex - 1)" class="btn btn-outline-dark btn-block @prevDisabled"> Previous </a>
         </div>
 
         <div class="col-sm">
-            Page:
+            <form method="post" asp-action="IndexConfirm" asp-controller="Post">
+                <div class="row form-group">
+                    <h6 class="col-sm">Page: @Model.PageIndex / @Model.TotalPages</h6>
+                    <input type="number" min="1" max="@Model.TotalPages" name="pageNumber" value="@Model.PageIndex" class="form-control w-25 col-sm">
+                    <input type="submit" value="Go" class="btn btn-outline-dark col-sm w-25" asp-for="PageIndex">
+                    <span asp-validation-for="PageIndex"></span>
+                </div>
+            </form>
         </div>
+
         <div class="col-sm">
-            <a asp-action="Index" asp-route-page="@(Model.PageIndex + 1)" class="btn btn-outline-dark float-right @nextDisabled"> Next </a>
+            <a asp-action="Index" asp-route-page="@(Model.PageIndex + 1)" class="btn btn-outline-dark float-right btn-block @nextDisabled"> Next </a>
         </div>
 
     </div>
@@ -42,3 +50,8 @@
         <h2 class="text-danger text-center">No posts here :(</h2>
     }
 </div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial"/>
+}

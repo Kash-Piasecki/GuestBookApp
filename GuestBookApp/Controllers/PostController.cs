@@ -24,6 +24,14 @@ namespace GuestBookApp.Controllers
             var pagingListAsync = await PagingList<Post>.CreateAsync(_postService.GetPostListDescending(), page, 3);
             return View(pagingListAsync);
         }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult IndexConfirm(int pageNumber)
+        {
+            // return Redirect($"?page={pageNumber}");
+            return Redirect($"Index/?page={pageNumber}");
+        }
 
         public IActionResult Create()
         {
