@@ -15,24 +15,12 @@ namespace GuestBookApp.Helper
         {
             PageIndex = pageIndex;
             TotalPages = (int) Math.Ceiling(count / (double) pageSize);
-            this.AddRange(items);
+            AddRange(items);
         }
 
-        public bool PreviousPage
-        {
-            get
-            {
-                return (PageIndex > 1);
-            }
-        }
+        public bool PreviousPage => PageIndex > 1;
 
-        public bool NextPage
-        {
-            get
-            {
-                return (PageIndex < TotalPages);
-            }
-        }
+        public bool NextPage => PageIndex < TotalPages;
 
         public static async Task<PagingList<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize)
         {

@@ -1,23 +1,44 @@
-﻿@model IEnumerable<GuestBookApp.Models.Post>
+﻿@using GuestBookApp.Helper;
+@model PagingList<GuestBookApp.Models.Post>
 
 @{
     ViewBag.Title = "GuestBook Entries";
     Layout = "_Layout";
+    var prevDisabled = !Model.PreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.NextPage ? "disabled" : "";
 }
-
 
 <div class="col-12 text-center pb-3 pt-2">
-    <h2 class="text-black-50">Guest Book Entries</h2>
+    <h2 class="text-black-50">GuestBook</h2>
 </div>
 
-@if (Model.Count() > 0)
-{
-    @foreach (var post in Model)
+<div class="container pb-3">
+    <div class="row justify-content-between">
+
+        <div class="col-sm">
+            <a asp-action="Index" asp-route-page="@(Model.PageIndex - 1)" class="btn btn-outline-dark @prevDisabled"> Previous </a>
+        </div>
+
+        <div class="col-sm">
+            Page:
+        </div>
+        <div class="col-sm">
+            <a asp-action="Index" asp-route-page="@(Model.PageIndex + 1)" class="btn btn-outline-dark float-right @nextDisabled"> Next </a>
+        </div>
+
+    </div>
+</div>
+
+<div>
+    @if (Model.Count() > 0)
     {
-        await Html.RenderPartialAsync("_SinglePost", post);
+        @foreach (var post in Model)
+        {
+            await Html.RenderPartialAsync("_SinglePost", post);
+        }
     }
-}
-else
-{
-    <h2 class="text-danger text-center">No posts here :(</h2>
-}
+    else
+    {
+        <h2 class="text-danger text-center">No posts here :(</h2>
+    }
+</div>

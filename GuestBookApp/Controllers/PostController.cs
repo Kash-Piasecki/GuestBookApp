@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using GuestBookApp.Data;
+using GuestBookApp.Helper;
 using GuestBookApp.Models;
 using GuestBookApp.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -17,9 +19,10 @@ namespace GuestBookApp.Controllers
         }
 
         // GET
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int page = 1)
         {
-            return View(_postService.GetPostListDescending());
+            var pagingListAsync = await PagingList<Post>.CreateAsync(_postService.GetPostListDescending(), page, 3);
+            return View(pagingListAsync);
         }
 
         public IActionResult Create()
