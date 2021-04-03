@@ -1,5 +1,3 @@
-using System;
-
 namespace GuestBookApp.Models
 {
     public class ErrorViewModel

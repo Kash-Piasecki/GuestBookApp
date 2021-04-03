@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using GuestBookApp.Data;
+﻿using System.Threading.Tasks;
 using GuestBookApp.Helper;
 using GuestBookApp.Models;
 using GuestBookApp.Services;
@@ -21,16 +18,20 @@ namespace GuestBookApp.Controllers
         // GET
         public async Task<IActionResult> Index(int page = 1)
         {
-            var pagingListAsync = await PagingList<Post>.CreateAsync(_postService.GetPostListDescending(), page, 3);
+            var postList = _postService.GetPostListDescending();
+            var pageSize = 3;
+            var pagingListAsync = await PagingList<Post>.CreateAsync(postList, page, pageSize);
             return View(pagingListAsync);
         }
-        
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult IndexConfirm(int pageNumber)
+        public IActionResult IndexConfirm(int pageNumber, int maxIndex)
         {
-            // return Redirect($"?page={pageNumber}");
-            return Redirect($"Index/?page={pageNumber}");
+            if (IsPageInRange(pageNumber, maxIndex))
+                return Redirect($"Index/?page={pageNumber}");
+            return RedirectToAction("Index", "Post");
         }
 
         public IActionResult Create()
@@ -44,10 +45,16 @@ namespace GuestBookApp.Controllers
         {
             if (ModelState.IsValid)
             {
-               _postService.SavePostToDb(model);
+                _postService.SavePostToDb(model);
                 return RedirectToAction("Index", "Post");
             }
+
             return View(model);
+        }
+
+        private bool IsPageInRange(int page, int max)
+        {
+            return page > 0 && page <= max;
         }
     }
 }
