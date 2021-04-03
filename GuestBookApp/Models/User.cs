@@ -6,7 +6,7 @@ namespace GuestBookApp.Models
     {
         [Required]
         [MinLength(3, ErrorMessage = "Minimum length is 3 characters.")]
-        [RegularExpression("^[a-z]*$", ErrorMessage = "Only english letters.")]
+        [RegularExpression("^[a-zA-Z]*$", ErrorMessage = "Only english letters.")]
         public string Name { get; set; }
         
         [Required]
