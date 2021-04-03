@@ -5,4 +5,47 @@
     Layout = "_Layout";
 }
 
-<h2>Post will be here</h2>
+<h2 class="text-black-50 text-center">Create a post!</h2>
+
+<hr>
+
+<form method="post" asp-action="Create" asp-controller="Post">
+
+    <div class="form-group row">
+        <label class="col-md-2" asp-for="User.Name"></label>
+        <div class=" col-md-10">
+            <input asp-for="User.Name" class="form-control"/>
+            <span asp-validation-for="User.Name" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-md-2" asp-for="User.Email"></label>
+        <div class=" col-md-10">
+            <input asp-for="User.Email" class="form-control"/>
+            <span asp-validation-for="User.Email" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-md-2" asp-for="Message"></label>
+        <div class=" col-md-10">
+            @* <input type="textbox" asp-for="Message" class="form-control"/> *@
+            <textarea class="form-control" asp-for="Message" ></textarea>
+            <span asp-validation-for="Message" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class=" col-md-10 offset-5">
+            <input type="submit" class="btn btn-success" width="60px!important" value="Post">
+            <a class="btn btn-danger" asp-controller="Post" asp-action="Index">Cancel</a>
+        </div>
+    </div>
+
+</form>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial"/>
+}

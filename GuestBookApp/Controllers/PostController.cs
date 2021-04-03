@@ -25,5 +25,10 @@ namespace GuestBookApp.Controllers
             }
             return View(postList);
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
     }
 }
