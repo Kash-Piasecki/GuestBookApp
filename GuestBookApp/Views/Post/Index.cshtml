@@ -21,11 +21,9 @@
 
         <div class="col-sm">
             <form method="post" asp-action="IndexConfirm" asp-controller="Post">
-                <div class="row form-group">
-                    <h6 class="col-sm">Page: @Model.PageIndex / @Model.TotalPages</h6>
+                <div class="row form-group space-between">
                     <input type="number" min="1" max="@Model.TotalPages" name="pageNumber" value="@Model.PageIndex" class="form-control w-25 col-sm">
                     <input type="submit" value="Go" class="btn btn-outline-dark col-sm w-25" asp-for="PageIndex">
-                    <span asp-validation-for="PageIndex"></span>
                 </div>
             </form>
         </div>
@@ -44,11 +42,19 @@
         {
             await Html.RenderPartialAsync("_SinglePost", post);
         }
+        
     }
     else
     {
         <h2 class="text-danger text-center">No posts here :(</h2>
     }
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col d-flex justify-content-center">
+                    <p class="h6 mx-auto">Page: @Model.PageIndex / @Model.TotalPages</p>
+        </div>
+    </div>
 </div>
 
 @section Scripts
