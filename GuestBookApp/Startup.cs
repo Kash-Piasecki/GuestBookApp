@@ -25,6 +25,10 @@ namespace GuestBookApp
             services.AddTransient<IPostService, PostService>();
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<GuestBookContext>();
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireNonAlphanumeric = false;
+            });
             
             services.AddDbContext<GuestBookContext>(options => options.UseSqlServer(
                 Configuration.GetConnectionString("DefaultConnection")));
