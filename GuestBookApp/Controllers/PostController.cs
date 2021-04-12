@@ -46,14 +46,10 @@ namespace GuestBookApp.Controllers
             {
                 _postService.SavePostToDb(model);
                 return RedirectToAction("Index", "Post");
+            
             }
-
+            
             return View(model);
-        }
-
-        private bool IsPageInRange(int page, int max) 
-        {
-            return page > 0 && page <= max;
         }
         
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
