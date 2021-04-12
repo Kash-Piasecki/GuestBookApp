@@ -31,8 +31,9 @@
                     @if (_signInManager.IsSignedIn(User))
                     {
                         <li class="nav-item">
-                            <form method="post" asp-controller="Account" asp-action="Logout"></form>
-                            <button class="btn btn-link nav-link py-0" type="submit">Logout @User.Identity.Name</button>
+                            <form method="post" asp-controller="Account" asp-action="Logout">
+                            <input type="submit" value="Logout @User.Identity.Name" class="btn btn-link nav-link py-0">
+                            </form>
                         </li>
                     }
                     else
