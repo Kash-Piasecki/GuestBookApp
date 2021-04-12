@@ -49,10 +49,29 @@ namespace GuestBookApp.Controllers
 
             return View(model);
         }
-        
+
         public IActionResult Login()
         {
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result =
+                    await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Post");
+                }
+
+                ModelState.AddModelError("", "Invalid login Attempt");
+            }
+
+            return View(model);
         }
     }
 }
