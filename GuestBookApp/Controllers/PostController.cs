@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using GuestBookApp.Helper;
 using GuestBookApp.Models;
@@ -50,6 +51,25 @@ namespace GuestBookApp.Controllers
             }
             
             return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(string PostId)
+        {
+            if (PostId == null)
+            {
+                return NotFound();
+            }
+
+            var guidId = Guid.Parse(PostId);
+            var post = _postService.GetPost(guidId);
+            if (post == null)
+            {
+                return NotFound();
+            }
+            _postService.DeletePost(post);
+            return RedirectToAction("Index");
         }
         
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

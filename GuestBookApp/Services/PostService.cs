@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using GuestBookApp.Data;
 using GuestBookApp.Models;
 
@@ -37,6 +38,14 @@ namespace GuestBookApp.Services
                 Message = post.Message,
                 User = newUser,
             });
+            _db.SaveChanges();
+        }
+
+        public Post GetPost(Guid id) => _db.Posts.Find(id);
+
+        public void DeletePost(Post post)
+        {
+            _db.Posts.Remove(post);
             _db.SaveChanges();
         }
 
