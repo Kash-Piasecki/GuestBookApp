@@ -2,6 +2,7 @@ using GuestBookApp.Data;
 using GuestBookApp.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +23,8 @@ namespace GuestBookApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IPostService, PostService>();
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<GuestBookContext>();
             
             services.AddDbContext<GuestBookContext>(options => options.UseSqlServer(
                 Configuration.GetConnectionString("DefaultConnection")));
@@ -46,7 +49,7 @@ namespace GuestBookApp
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
