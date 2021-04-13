@@ -6,7 +6,7 @@
         @if (Model.User.Email == User.Identity.Name)
         {
             <form method="post">
-                <input name="PostId" value="@Model.Id">
+                <input name="PostId" value="@Model.Id" hidden>
                 <input type="submit" value="delete" class="btn btn-sm btn-outline-dark" asp-controller="Post" asp-action="Delete">
             </form>
         }
